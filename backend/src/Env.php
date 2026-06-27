@@ -30,7 +30,10 @@ final class Env
 
     public static function get(string $key, ?string $default = null): ?string
     {
-        return self::$cache[$key] ?? getenv($key) ?: $default;
+        if (isset(self::$cache[$key])) return self::$cache[$key];
+        $env = getenv($key);
+        if ($env !== false && $env !== '') return $env;
+        return $default;
     }
 
     public static function require(string $key): string
