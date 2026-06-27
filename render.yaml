@@ -1,0 +1,40 @@
+services:
+  # === PHP Backend (Render Web Service) ===
+  - type: web
+    name: shopee-backend
+    runtime: php
+    plan: free
+    rootDir: .
+    buildCommand: |
+      echo "Build complete - no Composer deps needed"
+    startCommand: |
+      php -S 0.0.0.0:$PORT -t backend/public backend/public/router.php
+    healthCheckPath: /api/dashboard?shop_id=227650922
+    envVars:
+      - key: PHP_VERSION
+        value: 8.3
+      - key: DB_PATH
+        value: /var/data/shopee.db
+      - key: SHOPEE_PARTNER_ID
+        sync: false
+      - key: SHOPEE_PARTNER_KEY
+        sync: false
+      - key: SHOPEE_AUTH_URL
+        value: https://open.sandbox.test-stable.shopee.com/auth
+      - key: SHOPEE_API_BASE
+        value: https://openplatform.sandbox.test-stable.shopee.sg
+      - key: SHOPEE_REGION
+        value: ID
+      - key: SHOPEE_SANDBOX_SHOP_ID
+        value: "227650922"
+      - key: SHOPEE_AUTH_REDIRECT_URI
+        value: https://shopee-backend.onrender.com/callback.php
+      - key: FRONTEND_URL
+        value: https://YOUR-VERCEL-APP.vercel.app
+    disk:
+      name: shopee-data
+      mountPath: /var/data
+      sizeGB: 1
+
+# === Static site (Vercel) - deploy separately via vercel.json ===
+# Note: Vercel is separate from Render. Frontend deployed via Vercel.

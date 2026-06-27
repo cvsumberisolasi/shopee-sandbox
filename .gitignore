@@ -1,0 +1,26 @@
+# Secrets
+.env
+.env.local
+.env.production
+
+# Backend runtime
+backend/data/*.db
+backend/data/*.db-journal
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Vercel
+.vercel/
+
+# Tunnel
+ngrok
+*.ngrok
